@@ -47,27 +47,27 @@ def prevod():
 
     if hodnota is None:
         return jsonify({"chyba": "Zadajte hodnotu!"}), 400 
-    # CHYBA 3: chybala 400; HTTP 400 Bad Request je spravny kod chyby ak klient posle neplatny request
+    # OPRAVA 3: chybala 400; HTTP 400 Bad Request je spravny kod chyby ak klient posle neplatny request
 
     if typ == "c_to_f":
         vysledok = (hodnota * 9 / 5) + 32
         popis = f"{hodnota} °C = {vysledok:.2f} °F"
     elif typ == "hpa_to_mmhg":
-        vysledok = hodnota * 0.75006 # CHYBA 1: Vzorec pouzvival delenie namisto nasobenia
+        vysledok = hodnota * 0.75006 # OPRAVA 1: Vzorec pouzvival delenie namisto nasobenia
         popis = f"{hodnota} hPa = {vysledok:.2f} mmHg"
     elif typ == "ms_to_kmh":
         vysledok = hodnota * 3.6
         popis = f"{hodnota} m/s = {vysledok:.2f} km/h"
     else:
       return jsonify({"chyba": f"Neznámy typ prevodu: {typ}"}), 400
-    # CHYBA 4: nebol pridany else, cize nebol osetreny neznamy typ prevodu, co mohlo vest k chybam (NameError) v dalsom kode
+    # OPRAVA 4: nebol pridany else, cize nebol osetreny neznamy typ prevodu, co mohlo vest k chybam (NameError) v dalsom kode
 
     zaznam = {
         "hodnota": hodnota,
         "typ": typ,
         "vysledok": round(vysledok, 2),
         "popis": popis,
-        "cas": datetime.datetime.now().isoformat() # CHYBA 2: .isoformat() prevedie datetime na retazec do spravneho formatu pre JSON
+        "cas": datetime.datetime.now().isoformat() # OPRAVA 2: .isoformat() prevedie datetime na retazec do spravneho formatu pre JSON
     }
     uloz_prevod(zaznam)
 
