@@ -35,11 +35,12 @@
             const r = await fetch("/api/historia-prevodov");
             const data = await r.json();
             const telo = document.getElementById("telo");
+            // CHYBA 5: stlpce popis a typ boli vymenene, co mohlo vest k zle zobrazenym datam v tabulke
             telo.innerHTML = data.map(p => `
                 <tr>
                     <td>${p.hodnota}</td>
                     <td>${p.typ}</td>
-                    <td>${p.popis}</td> #CHYBA 5: stlpce popis a typ boli vymenene, co mohlo vest k zle zobrazenym datam v tabulke
+                    <td>${p.popis}</td>
                     <td>${p.cas}</td>
                 </tr>
             `).join("");
