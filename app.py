@@ -79,7 +79,26 @@ def historia_prevodov():
     return jsonify(nacitaj_prevody())
 
 
-# TODO: Dopíšte endpoint /api/statistika podľa špecifikácie v zadaní.
+@app.route("/api/statistika")
+def statistika():
+    prevody = nacitaj_prevody()
+    typy = ["c_to_f", "hpa_to_mmhg", "ms_to_kmh"]
+    vysledok = {}
+
+    for typ in typy:
+        zaznamy = [p["hodnota"] for p in prevody if p["typ"] == typ]
+        pocet = len(zaznamy)
+        if pocet == 0:
+            vysledok[typ] = {"pocet": 0}
+        else:
+            vysledok[typ] = {
+                "pocet": pocet,
+                "priemer": round(sum(zaznamy) / pocet, 2),
+                "min": min(zaznamy),
+                "max": max(zaznamy)
+            }
+
+    return jsonify(vysledok)
 
 
 @app.route("/")
